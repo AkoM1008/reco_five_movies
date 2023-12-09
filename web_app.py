@@ -58,8 +58,8 @@ def recommend_top_five_films_bagofwords(df,user_text):
     user_matrix=calculate_TFIDF_embeddings_user(vectorizer,user_text)
     cosine_sim=cosine_similarity(data_matrix,user_matrix).flatten()
     top_indices = np.argsort(cosine_sim)[-5:][::-1]
-    top_movies = df['overview'].iloc[top_indices]
-    return top_movies
+    top_movies = df.iloc[top_indices]
+    return pd.DataFrame(top_movies)
 
 def get_df_distilbert_embeddings(path):
     df_distilbert = pd.read_pickle(path)
