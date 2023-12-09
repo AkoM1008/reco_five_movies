@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 import unicodedata
+import nltk
 from nltk import pos_tag
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -21,13 +22,10 @@ import io
 
 
 
-
-
-#class ImageAndPathsDataset(datasets.ImageFolder):
-#    def __getitem__(self, index):
-#        img, _= super(ImageAndPathsDataset, self).__getitem__(index)
-#        path = self.imgs[index][0]
-#        return img, path
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
 
 class LemmatizerTokenizer:
     def __init__(self):
@@ -98,7 +96,7 @@ def recommend_top_five_films_distilbert(df,user_text):
 
 def main(user_text, method):
     movie_dataset=pd.read_csv('movies_metadata.csv')
-    df=movie_dataset['id','title','release_date','overview']
+    df=movie_dataset[['id','title','release_date','overview']]
     if method == "Bag of Words":
         return recommend_top_five_films_bagofwords(df,user_text)
     elif method == "DistilBERT":
