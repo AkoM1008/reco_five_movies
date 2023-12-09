@@ -72,9 +72,9 @@ def get_distilbert_embeddings_user(user_text):
     tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
     if pd.isna(user_text):
         return np.zeros(model.config.dim)
-    model.to('cuda')
+    #model.to('cuda')
     inputs = tokenizer(user_text, return_tensors='pt', truncation=True, padding=True, max_length=512)
-    inputs = {key: value.to('cuda') for key, value in inputs.items()}
+    #inputs = {key: value.to('cuda') for key, value in inputs.items()}
     with torch.no_grad():
         outputs = model(**inputs)
     return outputs.last_hidden_state.mean(dim=1).squeeze().detach().cpu().numpy()
