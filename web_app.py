@@ -63,6 +63,8 @@ def recommend_top_five_films_bagofwords(df,user_text):
 
 def get_df_distilbert_embeddings(path):
     df_distilbert = pd.read_pickle(path)
+    if not isinstance(df_distilbert, pd.DataFrame):
+        raise ValueError("Loaded object is not a DataFrame")
     return df_distilbert
 
 def get_distilbert_embeddings_user(user_text):
@@ -95,7 +97,7 @@ def recommend_top_five_films_distilbert(df,user_text):
     return top_movies
 
 def main(user_text, method):
-    movie_dataset=pd.read_csv('movies_metadata.csv')
+    movie_dataset=pd.read_csv('movies_metadata.csv',dtype=str)
     df=movie_dataset[['id','title','release_date','overview']]
     if method == "Bag of Words":
         return recommend_top_five_films_bagofwords(df,user_text)
