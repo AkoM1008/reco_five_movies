@@ -1,2 +1,3 @@
-distilbert_embeddings.pkl
+*.ann
+*.pkl
 .DS_Store
